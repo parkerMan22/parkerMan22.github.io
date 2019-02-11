@@ -1,0 +1,106 @@
+
+    <h1 style = "border: darkslategrey 5px;
+    border-style:groove;
+    width: 610px;
+    text-align: center;
+    border-style: outset;
+    padding: 0;
+    margin-left: 220px;
+    margin-bottom: 20;
+    display: block;
+    width: 610px;"> Tron
+    </h1>
+
+    <canvas id="backGround"  width="600" height="400"
+        style="border:black 10px;
+        border-style:outset;
+        padding: 0;
+        margin: auto;
+        display:-moz-inline-grid;
+        width: 600px;">
+    </canvas>
+
+<script>
+    window.onload=function()
+    {
+        canv=document.getElementById("backGround");
+        ctx=canv.getContext("2d");
+        document.addEventListener("keydown", keyPush);
+        setInterval(game,1000/20);  //Speed
+    }
+
+    gs=10;               //Grid Scale    (screen width / gs?)
+
+    //Player 1
+    {
+        px=58;
+        py=38;       //Player position
+        xv=0;           //Inital Velocity
+        yv=-1;
+    }
+
+    function game()
+    {
+        this.canvas = document.getElementById("canv");
+        this.ctx = this.canvas.getContext("2d");
+        this.width = 600;
+        this.height = 400;
+        this.canvas.width = this.width;
+        this.canvas.height = this.height;
+
+        let ctx = this.ctx;
+
+        ctx.fillStyle="darkolivegreen";
+        ctx.fillRect(0,0,this.width,this.height);
+        ctx.save(); //Main Floor
+        {
+            ctx.fillStyle="red";
+            ctx.fillRect(400, 300, 50, 50);
+            
+            ctx.fillStyle="darkred";
+            ctx.fillRect(0, 0, 10, 10);
+            
+        }
+
+
+        function sleep()
+        {
+            location.reload();
+        }
+
+    }
+
+    function keyPush(evt)
+    {
+        switch(evt.keyCode)
+        {
+            //Player 1
+            case 37:
+                xv=-1; yv=0;
+                break;
+            case 38:
+                xv=0; yv=-1;
+                break;
+            case 39:
+                xv=1; yv=0;
+                break;
+            case 40:
+                xv=0; yv=1;
+                break;
+
+            //Player 2
+            case 65:            //a
+                x2v=-1; y2v=0;
+                break;
+            case 87:            //w
+                x2v=0; y2v=-1;
+                break;
+            case 68:            //d
+                x2v=1; y2v=0;
+                break;
+            case 83:            //s
+                x2v=0; y2v=1;
+                break;
+        }
+    }
+</script>
