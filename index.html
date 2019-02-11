@@ -1,0 +1,360 @@
+<div style="width:1100px; margin:auto;">
+    <h1 style = "border: darkslategrey 5px;
+    border-style:groove;
+    width: 610px;
+    text-align: center;
+    border-style: outset;
+    padding: 0;
+    margin-left: 220px;
+    margin-bottom: 20;
+    display: block;
+    width: 610px;"> Tron
+    </h1>
+
+    <canvas onclick="x2v=-1; y2v=0;" id="A" width="50" height="50"style="background-color: dodgerblue; text-align: center; font: 100; border:black 10px; border-style:outset; vertical-align: 200px;"></canvas>
+    <script>var canvas = document.getElementById("A");
+        var ctx=canvas.getContext("2d");
+        ctx.font="40px Arial";
+        ctx.fillStyle = "black";
+        ctx.textAlign = "center";
+        ctx.fillText("A", canvas.width/2, canvas.height - 10);</script>
+
+    <canvas onclick="x2v=0; y2v=-1;" id="W" width="50" height="50" style="background-color: dodgerblue; text-align: center; font: 100; border:black 10px; border-style:outset; vertical-align:275; margin-right: -75px;"></canvas>
+    <script>var canvas = document.getElementById("W");
+        var ctx=canvas.getContext("2d");
+        ctx.font="40px Arial";
+        ctx.fillStyle = "black";
+        ctx.textAlign = "center";
+        ctx.fillText("W", canvas.width/2, canvas.height - 10);</script>
+
+    <canvas onclick="x2v=0; y2v=1;" id="S" width="50" height="50"style="background-color: dodgerblue; text-align: center; font: 100; border:black 10px; border-style:outset; vertical-align:125; margin-right: 0px;"></canvas>
+    <script>var canvas = document.getElementById("S");
+        var ctx=canvas.getContext("2d");
+        ctx.font="40px Arial";
+        ctx.fillStyle = "black";
+        ctx.textAlign = "center";
+        ctx.fillText("S", canvas.width/2, canvas.height - 10);</script>
+
+    <canvas onclick="x2v=1; y2v=0;" id="D" width="50" height="50"style="background-color: dodgerblue; text-align: center; font: 100; border:black 10px; border-style:outset; vertical-align:200;"></canvas>
+    <script>var canvas = document.getElementById("D");
+        var ctx=canvas.getContext("2d");
+        ctx.font="40px Arial";
+        ctx.fillStyle = "black";
+        ctx.textAlign = "center";
+        ctx.fillText("D", canvas.width/2, canvas.height - 10);</script>
+
+
+    <canvas id="gc"  width="600" height="400"
+        style="border:black 10px;
+        border-style:outset;
+        padding: 0;
+        margin: auto;
+        display:-moz-inline-grid;
+        width: 600px;">
+    </canvas>
+
+    <canvas onclick="xv=-1; yv=0;" id="Left" width="50" height="50"style="background-color: orangered; text-align: center; font: 100; border:black 10px; border-style:outset; vertical-align: 200px;"></canvas>
+    <script>var canvas = document.getElementById("Left");
+        var ctx=canvas.getContext("2d");
+        ctx.font="50px Arial";
+        ctx.fillStyle = "black";
+        ctx.textAlign = "center";
+        ctx.fillText("<", canvas.width/2, canvas.height - 5);</script>
+
+    <canvas onclick="xv=0; yv=-1;" id="Up" width="50" height="50" style="background-color: orangered; text-align: center; font: 100; border:black 10px; border-style:outset; vertical-align:275; margin-right: -75px;"></canvas>
+    <script>var canvas = document.getElementById("Up");
+        var ctx=canvas.getContext("2d");
+        ctx.font="60px Arial";
+        ctx.fillStyle = "black";
+        ctx.textAlign = "center";
+        ctx.fillText("^", canvas.width/2, canvas.height);</script>
+
+    <canvas onclick="xv=0; yv=1;" id="Down" width="50" height="50"style="background-color: orangered; text-align: center; font: 100; border:black 10px; border-style:outset; vertical-align:125; margin-right: 0px;"></canvas>
+    <script>var canvas = document.getElementById("Down");
+        var ctx=canvas.getContext("2d");
+        ctx.font="40px Arial";
+        ctx.fillStyle = "black";
+        ctx.textAlign = "center";
+        ctx.fillText("V", canvas.width/2, canvas.height - 10);</script>
+
+    <canvas onclick="xv=1; yv=0;" id="Right" width="50" height="50"style="background-color: orangered; text-align: center; font: 100; border:black 10px; border-style:outset; vertical-align:200;"></canvas>
+    <script>var canvas = document.getElementById("Right");
+        var ctx=canvas.getContext("2d");
+        ctx.font="50px Arial";
+        ctx.fillStyle = "black";
+        ctx.textAlign = "center";
+        ctx.fillText(">", canvas.width/2, canvas.height - 5);</script>
+</div>
+
+<script>
+    window.onload=function()
+    {
+        canv=document.getElementById("gc");
+        ctx=canv.getContext("2d");
+        document.addEventListener("keydown", keyPush);
+        setInterval(game,1000/20);  //Speed
+    }
+
+    tailReset = 10;     //start length
+    gs=10               //Grid Scale    (screen width / gs?)
+    tcy=40;              //tile counter y axis
+    tcx=60;              //tile counter x axis
+    timer=0;
+    timerUp = 50;
+
+    //Player 1
+    {
+        px=58
+        py=38;       //Player position
+        xv=0;           //Inital Velocity
+        yv=-1
+        trail = [];
+        tail = 10;
+    }
+
+    //Player 2
+    {
+        p2x=p2y=1;      //Player 2 position
+        x2v=0;          //Initial Velocity
+        y2v=1
+        trail2 = [];
+        tail2 = 10;
+    }
+
+    //Powerups
+    {
+        //powerup Start Locations
+        ax=Math.floor(Math.random()*tcx);
+        ay=Math.floor(Math.random()*tcy);
+        a2x=Math.floor(Math.random()*tcx);
+        a2y=Math.floor(Math.random()*tcy);
+        powerUpSize = 10;
+    }
+
+    function game()
+    {
+        timer++;
+        if(timer >= timerUp)
+        {
+            tail += 2;
+            tail2 += 2;
+            timer = 0;
+        }
+
+        px+=xv;
+        py+=yv;
+
+        p2x+=x2v;
+        p2y+=y2v;
+
+        if(px<0)    //Screen Wraps player
+        {
+            px= tcx-1;
+        }
+        if(px>tcx-1)
+        {
+            px= 0;
+        }
+        if(py<0)
+        {
+            py= tcy-1;
+        }
+        if(py>tcy-1)
+        {
+            py= 0;
+        }
+
+        if(p2x<0)    //Screen Wraps player 2
+        {
+            p2x= tcx-1;
+        }
+        if(p2x>tcx-1)
+        {
+            p2x= 0;
+        }
+        if(p2y<0)
+        {
+            p2y= tcy-1;
+        }
+        if(p2y>tcy-1)
+        {
+            p2y= 0;
+        }
+
+        ctx.fillStyle="darkslategray";
+        ctx.fillRect(0,0,canv.width,canv.height);
+        ctx.save();
+
+        ctx.fillStyle="orangered";  //PLAYER 1
+        for(var i=0; i<trail.length; i++)
+        {
+            ctx.fillRect(trail[i].x*gs,trail[i].y*gs,gs-2,gs-2);
+            
+            if(trail[i].x == px && trail[i].y == py)
+            {
+                
+                tail = tailReset;   //p1 Dies
+            }
+
+            if(trail[i].x == p2x && trail[i].y == p2y)
+            {
+                ctx.restore();
+                ctx.fillStyle="orangered";
+                ctx.fillRect(0,0,canv.width,canv.height);
+
+                alert("Player 1 Wins!")
+                console.log("P2 died");
+                location.reload();
+                tail2 = tailReset;   //p2 Dies from p1
+            }
+
+        }
+
+        function sleep()
+        {
+            location.reload();
+        }
+
+        trail.push({x:px,y:py});
+        while(trail.length>tail)
+        {
+            trail.shift();
+        }
+
+        ctx.fillStyle="dodgerblue"; //PLAYER 2
+        for(var i=0; i<trail2.length; i++)
+        {
+            ctx.fillRect(trail2[i].x*gs,trail2[i].y*gs,gs-2,gs-2);
+            
+            if(trail2[i].x == p2x && trail2[i].y == p2y)
+            {
+                
+                tail2 = tailReset;   //p2 Dies from self
+            }
+
+            if(trail2[i].x == px && trail2[i].y == py)
+            {
+                ctx.restore();
+                ctx.fillStyle="dodgerblue";
+                ctx.fillRect(0,0,canv.width,canv.height);
+
+                alert("Player 2 Wins!")
+                //console.log("P1 died");
+                location.reload();
+                tail = tailReset;   //p1 Dies from p2
+            }            
+        }
+
+        trail2.push({x:p2x,y:p2y});
+        while(trail2.length>tail2)
+        {
+            trail2.shift();
+        }
+
+        //Powerup 1
+        {
+            //Spawn 1
+            if(ax==px && ay==py)
+            {
+                tail+= powerUpSize;
+                ax=Math.floor(Math.random()*tcx);
+                ay=Math.floor(Math.random()*tcy);
+            }
+
+            if(ax==p2x && ay==p2y)
+            {
+                tail2+= powerUpSize;
+                ax=Math.floor(Math.random()*tcx);
+                ay=Math.floor(Math.random()*tcy);
+            }
+            ctx.fillStyle="lime";
+            ctx.fillRect(ax*gs,ay*gs,gs,gs);
+
+             //Spawn 2
+             if(a2x==px && a2y==py)
+            {
+                tail+= powerUpSize;
+                a2x=Math.floor(Math.random()*tcx);
+                a2y=Math.floor(Math.random()*tcy);
+            }
+
+            if(a2x==p2x && a2y==p2y)
+            {
+                tail2+= powerUpSize;
+                a2x=Math.floor(Math.random()*tcx);
+                a2y=Math.floor(Math.random()*tcy);
+            }
+
+            ctx.fillStyle="lime";
+            ctx.fillRect(a2x*gs,a2y*gs,gs,gs);
+        }
+    }
+
+    function keyPush(evt)
+    {
+        switch(evt.keyCode)
+        {
+            //Player 1
+            case 37:
+                xv=-1; yv=0;
+                break;
+            case 38:
+                xv=0; yv=-1;
+                break;
+            case 39:
+                xv=1; yv=0;
+                break;
+            case 40:
+                xv=0; yv=1;
+                break;
+
+            //Player 2
+            case 65:            //a
+                x2v=-1; y2v=0;
+                break;
+            case 87:            //w
+                x2v=0; y2v=-1;
+                break;
+            case 68:            //d
+                x2v=1; y2v=0;
+                break;
+            case 83:            //s
+                x2v=0; y2v=1;
+                break;
+        }
+    }
+
+    function screenTap(key)
+    {
+        switch(key)
+        {
+            //Player 1
+            case 37:
+                xv=-1; yv=0;
+                break;
+            case 38:
+                xv=0; yv=-1;
+                break;
+            case 39:
+                xv=1; yv=0;
+                break;
+            case 40:
+                xv=0; yv=1;
+                break;
+
+            //Player 2
+            case a:            //a
+                x2v=-1; y2v=0;
+                break;
+            case w:            //w
+                x2v=0; y2v=-1;
+                break;
+            case d:            //d
+                x2v=1; y2v=0;
+                break;
+            case screen:            //s
+                x2v=0; y2v=1;
+                break;
+        }
+    }
+</script>
