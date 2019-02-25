@@ -46,7 +46,23 @@ gs=10;               //Grid Scale    (screen width / gs?)
 }
 function game()
 {
-    
+    if (tank1x > canv.width + 35)
+    {
+        tank1x = -35;
+    }
+    if (tank1x < -35)
+    {
+        tank1x = canv.width + 35;
+    }
+
+    if (tank1y > canv.height + 35)
+    {
+        tank1y = -35;
+    }
+    if (tank1y < -35)
+    {
+        tank1y = canv.height + 35;
+    }
     //tank1angle = 0.3;
    /*this.canvas = document.getElementById("canv");
     this.ctx = this.canvas.getContext("2d");
