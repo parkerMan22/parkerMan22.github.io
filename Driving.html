@@ -25,7 +25,14 @@ window.onload=function()
     canv=document.getElementById("backGround");
     ctx=canv.getContext("2d");
     document.addEventListener("keydown", keyPush);
-    setInterval(game,1000/10);  //Speed
+    setInterval(game,1000/30);  //Speed
+    document.addEventListener('keydown', function (e) {
+      canv.keys = (canv.keys || []);
+      canv.keys[e.keyCode] = true;
+    })
+    document.addEventListener('keyup', function (e) {
+        canv.keys[e.keyCode] = false; 
+    })
 }
 gs=10;               //Grid Scale    (screen width / gs?)
 //Player 1
@@ -35,10 +42,11 @@ gs=10;               //Grid Scale    (screen width / gs?)
     tank1vx=0;                  //Tank 1 Inital Velocity
     tank1vy=0;
     tank1angle = 0;
-    tank1Speed = 3;
+    tank1Speed = 5;
 }
 function game()
 {
+    
     //tank1angle = 0.3;
    /*this.canvas = document.getElementById("canv");
     this.ctx = this.canvas.getContext("2d");
@@ -95,35 +103,60 @@ function game()
     {
         location.reload();
     }
+
+    //Controls
+    if (canv.keys && canv.keys[37])     //Left
+    {
+        tank1angle -= 0.1;
+    }
+    if (canv.keys && canv.keys[38])     //Up
+    {
+            tank1x += Math.cos(tank1angle) * tank1Speed;
+            tank1y += Math.sin(tank1angle) * tank1Speed;
+    }
+    if (canv.keys && canv.keys[39])    //Right
+    {
+        tank1angle += 0.1;
+    }
+    if (canv.keys && canv.keys[40])     //Down
+    {
+            tank1x -= Math.cos(tank1angle) * tank1Speed;
+            tank1y -= Math.sin(tank1angle) * tank1Speed;
+    }    
     
 }
+
 function keyPush(evt)
 {
+    
     switch(evt.keyCode)
     {
-        //Player 1
-        case 37:
-            xv=-1; yv=0;
+        //Player 2
+        /*case 37:            //a
+            tank1angle -= 0.1;
             break;
-        case 38:
-            xv=0; yv=-1;ad
+        case 38:            //w
+            tank1x += Math.cos(tank1angle) * tank1Speed;
+            tank1y += Math.sin(tank1angle) * tank1Speed;
             break;
-        case 39:
-            xv=1; yv=0;
+        case 39:            //d
+            tank1angle += 0.1;
             break;
-        case 40:
-            xv=0; yv=1;
-            break;
+        case 40:            //s
+            tank1x -= Math.cos(tank1angle) * tank1Speed;
+            tank1y -= Math.sin(tank1angle) * tank1Speed;
+            break;*/
+
         //Player 2
         case 65:            //a
-            tank1angle += 0.1;
+            tank1angle -= 0.1;
             break;
         case 87:            //w
             tank1x += Math.cos(tank1angle) * tank1Speed;
             tank1y += Math.sin(tank1angle) * tank1Speed;
             break;
         case 68:            //d
-            tank1angle -= 0.1;
+            tank1angle += 0.1;
             break;
         case 83:            //s
             tank1x -= Math.cos(tank1angle) * tank1Speed;
