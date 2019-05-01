@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+
+<head>
+  <title> Intro to Game Programming</title>
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .stretchedMargin {
+      display: block;
+      position: absolute;
+      height: auto;
+      bottom: 0;
+      top: 0;
+      left: 0;
+      right: 0;
+    }
+
+  </style>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.min.js"></script>
+
+  <!-- Geometry -->
+  <script src="./geo/Geometry.js"></script>
+  <script src="./geo/Vector2.js"></script>
+  <script scr="./geo/Circle2.js"></script>
+  <script scr="./geo/CircleFile.js"></script>
+  <script src="./geo/Triangle.js"></script>
+  <script src="./geo/A.js"></script>
+  <script src="./geo/Line.js"></script>
+  <script src="./geo/AxisAlignedRectangle.js"></script>
+
+  
+  <!-- Components -->
+  <script src="./components/Component.js"></script>
+  <script src="./components/GeometryComponent.js"></script>
+  <script src="./components/CircleComponent.js"></script>
+  <script src="./components/AxisAlignedRectangleComponent.js"></script>
+  <script src="./components/RendererComponent.js"></script>
+  <script src="./components/GeometryRendererComponent.js"></script>
+  <script src="./components/GUIRendererComponent.js"></script>
+  <script src="./components/GUIRectangleComponent.js"></script>
+  <script src="./components/GUITextComponent.js"></script>
+  <script src="./engine/CameraComponent.js"></script>
+  <script src="./components/Behavior.js"></script>
+  <script src="./components/RigidBodyComponent.js"></script>
+  <script src="./components/ParticleSystemComponent.js"></script>
+  
+  <!-- Physics -->
+  <script src="./physics/Collider.js"></script>
+
+  <!-- Game Engine Code -->
+  <script src="./engine/Transform.js"></script>
+  <script src="./engine/GameObject.js"></script>
+  <script src="./engine/Camera.js"></script>
+  <script src="./engine/Scene.js"></script>
+  <script src="./engine/Prefabs.js"></script>
+
+
+  <!-- Behavior Scripts-->
+  <script src="./behaviors/BallBehavior.js"></script>
+  <script src="./behaviors/RotatorBehavior.js"></script>
+  <script src="./behaviors/NextSceneBehavior.js"></script>
+  <script src="./behaviors/GravityBallBehavior.js"></script>
+  <script src="./behaviors/TextBehavior.js"></script>
+  <script src="./behaviors/MainPlayer.js"></script>
+  <script src="./behaviors/SecondPlayer.js"></script>
+  <script src="./behaviors/BaddieBehavior.js"></script>
+  <script src="./behaviors/BulletBehavior.js"></script>
+  <script src="./behaviors/BadBulletBehavior.js"></script>
+  <script src="./behaviors/ParticleBehavior.js"></script>
+  <script src="./behaviors/GameControllerBehavior.js"></script>
+
+
+
+  <!-- Prefab GameObjects -->
+  <script src="./prefabs/WallPrefab.js"></script>
+  <script src="./prefabs/BallPrefab.js"></script>
+  <script src="./prefabs/NextPrefab.js"></script>
+
+
+
+  <script src="./eventHandler.js"></script>
+
+  <script src="./guiSupport.js"></script>
+
+  <!-- Scenes in our games -->
+  <script src="./scenes/RectangleScene.js"></script>
+  <script src="./scenes/CircleScene.js"></script>
+  <script src="./scenes/TitleScene.js"></script>
+  <script src="./scenes/EndScene.js"></script>
+  <script src="./scenes/EndScene2.js"></script>
+  <script src="./scenes/GravityScene.js"></script>
+
+
+
+</head>
+
+<body onkeydown="keydown(event)" onKeyUp="keyup(event)" style="background-color:lightgray" onresize="resize(event)" onload="main()">
+  <div class="stretchedMargin">
+    <canvas id="canv" onmousedown="mousedown(event)" onmouseup="mouseup(event)" onmousemove="mousemove(event)"
+      onwheel="wheel(event)"></canvas>
+  </div>
+
+  <script src="simpleStarter.js"></script>
+</body>
+
+</html>

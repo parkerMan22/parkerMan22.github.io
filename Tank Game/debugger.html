@@ -1,0 +1,426 @@
+<!doctype html>
+<html>
+
+<head>
+  <title> Intro to Game Programming</title>
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: sans-serif;
+
+    }
+
+    .goSelect {
+      margin: 2px;
+      border: 0;
+      background-color: transparent;
+
+    }
+
+    .goSelect:hover {
+      background-color: #a2a2a2;
+    }
+
+    .goSelect:focus {
+      background-color: #929292;
+      outline: 0;
+    }
+
+    .sceneSelect {
+      border: 0;
+      line-height: 1.5rem;
+      border-radius: 10px;
+      background-color: transparent;
+      margin: 10px;
+    }
+
+    .sceneSelect:hover {
+      background-color: transparent;
+    }
+
+    .sceneSelect:focus {
+      outline: 0;
+      background-color: lightblue;
+    }
+
+
+    .stretchedMargin {
+      display: block;
+      position: absolute;
+      height: auto;
+      bottom: 0;
+      top: 0;
+      left: 0;
+      right: 0;
+      margin-top: 50px;
+      margin-bottom: 200px;
+      margin-right: 200px;
+      margin-left: 200px;
+      border: solid #828282 1px;
+    }
+
+    .top {
+      display: block;
+      position: absolute;
+      height: 50px;
+      top: 0;
+      background-color: #a2a2a2;
+      width: 100%
+    }
+
+    .bottom {
+      display: block;
+      position: absolute;
+      height: 200px;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      width: auto;
+      background-color: #a2a2a2;
+      border-top: solid #a2a2a2 5px;
+
+    }
+
+    .bottomContainer {
+      display: block;
+      position: absolute;
+      right: 0;
+      left: 0;
+      top: 10px;
+      bottom: 0;
+      background-color: #c2c2c2;
+      padding: 5px;
+    }
+
+    .left {
+      display: block;
+      position: absolute;
+      width: 200px;
+      left: 0;
+      height: auto;
+      top: 50px;
+      bottom: 200px;
+      background-color: #a2a2a2;
+      border-right: solid #a2a2a2 5px;
+    }
+
+    .header {
+      background-color: #e2e2e2;
+      padding-left: 15px;
+      padding-top: 2px;
+      padding-bottom: 2px;
+      width: 100px;
+      height: 25px;
+
+    }
+
+    .componentHeader {
+      font-weight: bold;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      display: block;
+      overflow: hidden;
+
+    }
+
+    .componentLeft {
+      text-overflow: ellipsis;
+      width: 90px;
+      float: left;
+      white-space: nowrap;
+      display: block;
+      overflow: hidden;
+
+    }
+
+    .componentRight {
+      text-overflow: ellipsis;
+      width: 90px;
+      white-space: nowrap;
+      display: block;
+      overflow: hidden;
+      background-color: #e2e2e2;
+    }
+
+    .componentDiv {
+      margin-top: 3px;
+      margin-bottom: 3px;
+    }
+
+    .innerContainer {
+      display: block;
+      position: absolute;
+      right: 0px;
+      left: 0;
+      top: 25px;
+      bottom: 0;
+      background-color: #c2c2c2;
+      padding: 5px;
+    }
+
+    .right {
+      display: block;
+      position: absolute;
+      width: 200px;
+      right: 0;
+      top: 50px;
+      bottom: 200px;
+      height: auto;
+      background-color: #a2a2a2;
+      border-left: solid #a2a2a2 5px;
+    }
+
+    .topLine {
+      background-color: #e2e2e2;
+      margin: 10px;
+      padding-left: 15px;
+      padding-top: 2px;
+      padding-bottom: 2px;
+    }
+
+    .sceneButton {
+      margin: 10px;
+    }
+  </style>
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+    integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+  <script src="live.js"></script>
+
+  <!-- Geometry -->
+  <script src="./geo/Geometry.js"></script>
+  <script src="./geo/Vector2.js"></script>
+  <script scr="./geo/Circle2.js"></script>
+  <script scr="./geo/CircleFile.js"></script>
+  <script src="./geo/Triangle.js"></script>
+  <script src="./geo/A.js"></script>
+  <script src="./geo/Line.js"></script>
+  <script src="./geo/AxisAlignedRectangle.js"></script>
+
+
+  <!-- Components -->
+  <script src="./components/Component.js"></script>
+  <script src="./components/GeometryComponent.js"></script>
+  <script src="./components/CircleComponent.js"></script>
+  <script src="./components/AxisAlignedRectangleComponent.js"></script>
+  <script src="./components/RendererComponent.js"></script>
+  <script src="./components/GeometryRendererComponent.js"></script>
+  <script src="./components/GUIRendererComponent.js"></script>
+  <script src="./components/GUIRectangleComponent.js"></script>
+  <script src="./components/GUITextComponent.js"></script>
+  <script src="./engine/CameraComponent.js"></script>
+  <script src="./components/Behavior.js"></script>
+  <script src="./components/RigidBodyComponent.js"></script>
+
+  <!-- Physics -->
+  <script src="./physics/Collider.js"></script>
+
+  <!-- Game Engine Code -->
+  <script src="./engine/Transform.js"></script>
+  <script src="./engine/GameObject.js"></script>
+  <script src="./engine/Camera.js"></script>
+  <script src="./engine/Scene.js"></script>
+  <script src="./engine/Prefabs.js"></script>
+
+
+  <!-- Behavior Scripts-->
+  <script src="./behaviors/BallBehavior.js"></script>
+  <script src="./behaviors/RotatorBehavior.js"></script>
+  <script src="./behaviors/NextSceneBehavior.js"></script>
+  <script src="./behaviors/GravityBallBehavior.js"></script>
+  <script src="./behaviors/TextBehavior.js"></script>
+  <script src="./behaviors/MainPlayer.js"></script>
+  <script src="./behaviors/BaddieBehavior.js"></script>
+  <script src="./behaviors/BulletBehavior.js"></script>
+  <script src="./behaviors/BadBulletBehavior.js"></script>
+  <script src="./behaviors/ParticleBehavior.js"></script>
+  <script src="./behaviors/GameControllerBehavior.js"></script>
+
+
+
+  <!-- Prefab GameObjects -->
+
+  <script src="./prefabs/WallPrefab.js"></script>
+  <script src="./prefabs/BallPrefab.js"></script>
+  <script src="./prefabs/NextPrefab.js"></script>
+
+
+
+  <script src="./eventHandler.js"></script>
+
+  <script src="./guiSupport.js"></script>
+
+  <!-- Scenes in our games -->
+  <script src="./scenes/RectangleScene.js"></script>
+  <script src="./scenes/CircleScene.js"></script>
+  <script src="./scenes/TitleScene.js"></script>
+  <script src="./scenes/EndScene.js"></script>
+  <script src="./scenes/GravityScene.js"></script>
+
+</head>
+
+<body onload="main()" onkeydown="keydown(event)" onKeyUp="keyup(event)" style="background-color:lightgray"
+  onresize="resize(event)">
+  <div class="stretchedMargin">
+    <canvas id="canv" onmousedown="mousedown(event)" onmouseup="mouseup(event)" onmousemove="mousemove(event)"
+      onwheel="wheel(event)">
+    </canvas>
+  </div>
+  <div id="app">
+    <div class="top">
+      <div class="topLine"><i class="fa fa-bug" aria-hidden="true"></i> Debugging
+        Inspector
+        <button v-if="!this.selectedScene.playing" @click="play()"><i class="fa fa-play" aria-hidden="true"></i>
+        </button>
+        <button v-if="this.selectedScene.playing" @click="pause()" icon><i class="fa fa-pause" aria-hidden="true"></i>
+        </button>
+      </div>
+
+    </div>
+
+    <div class="right">
+      <div class="header">
+        <div><i class="fa fa-info-circle" aria-hidden="true"></i> Inspector </div>
+      </div>
+      <div class="innerContainer">
+
+        <div v-if="selectedGameObject">
+          <div>{{selectedGameObject.name}}</div>
+          <hr>
+          <div class="componentHeader">Transform:</div>
+          <div class="componentDiv"><span class="componentLeft">Position</span><span class="componentRight">
+              {{Math.round(selectedGameObject.transform.position.x*10)/10}},{{Math.round(selectedGameObject.transform.position.y*10)/10}}</span>
+          </div>
+          <div class="componentDiv">
+            <span class="componentLeft">Rotation</span><span class="componentRight">
+              {{selectedGameObject.transform.rotation}}</span>
+          </div>
+          <div class="componentDiv"><span class="componentLeft">Scale</span><span class="componentRight">
+              {{selectedGameObject.transform.scale.x}}, {{selectedGameObject.transform.scale.y}}</span></div>
+          <hr>
+          <div v-for="component in components" class="componentDiv">
+            <div class="componentHeader">{{component.name}}</div>
+            <div v-for="exposed in component.exposed" class="componentDiv">
+              <span class="componentLeft">{{exposed}}</span><span class="componentRight"> {{component[exposed]}}</span>
+            </div>
+            <hr>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+    <div class="left">
+      <div class="header"><i class="fa fa-list" aria-hidden="true"></i> Hierarchy</div>
+      <div class="innerContainer">
+        <div v-for="gameObject in gameObjects">
+          <button class="goSelect" @click="selectGameObject(gameObject)">
+            {{gameObject.name}}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="bottom">
+      <div class="header"><i class="fa fa-folder" aria-hidden="true"></i> Project</div>
+      <div class="innerContainer">
+        <div id="scenes">
+          <button class="sceneSelect" v-for="scene in scenes" @click="changeSceneEventStart(scene)">
+            <i class="fa fa-sitemap" aria-hidden="true" style="font-size:2rem;"></i><br />{{scene.name}}
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+
+
+
+
+
+
+
+  <script src='https://code.jquery.com/jquery-3.2.1.min.js'></script>
+  <script src='https://unpkg.com/vue'></script>
+
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js'></script>
+
+  <script>
+
+
+
+
+    var app = new Vue({
+      el: '#app',
+      data: {
+        scenes: [],
+        gameObjects: [],
+        components: [],
+        selectedScene: {},
+        selectedGameObject: undefined,
+
+      },
+      mounted() {
+
+      },
+      methods: {
+        play() {
+          this.selectedScene.playing = true;
+        },
+        pause() {
+          this.selectedScene.playing = false;
+        },
+        loadScenes() {
+          this.scenes = [];
+          for (let i = 0; i < allScenes.length; i++) {
+            this.scenes.push(allScenes[i]);
+          }
+
+        },
+        changeSceneEventStart(stateHandler) {
+          SceneManager.loadScene(stateHandler);
+        },
+        changeSceneEvent(stateHandler) {
+          this.selectedScene = stateHandler;
+
+          this.selectedGameObject = undefined;
+
+          this.gameObjects = [];
+          this.components = [];
+
+
+          for (let i = 0; i < stateHandler.hierarchy.length; i++) {
+            this.gameObjects.push(stateHandler.hierarchy[i]);
+          }
+
+        },
+
+        selectGameObject(gameObject) {
+          this.selectedGameObject = gameObject;
+          this.components = [];
+          for (let i = 0; i < gameObject.components.length; i++) {
+            this.components.push(gameObject.components[i]);
+          }
+        }
+      },
+    });
+
+
+
+  </script>
+
+  <script src="simpleStarter.js"></script>
+  <!-- <script src="generic.js"></script> -->
+
+
+
+
+
+</body>
+
+</html>
